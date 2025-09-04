@@ -9,6 +9,7 @@ import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import TopHeader from 'components/common/TopHeader';
 
 const banners = [
   { src: require('../assets/banner.jpg'), alt: '오늘단하루 할인' },
@@ -38,6 +39,7 @@ const MainPage = () => {
 
   return (
     <>
+    <TopHeader />
       <Header></Header>
       <div>
         <Swiper
