@@ -1,10 +1,7 @@
-import Button from 'components/common/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import styles from './Auth.module.css';
 import { AuthType, LoginType, RegisterType } from 'types/ConstType';
 import axios from 'axios';
-import Input from 'components/common/Input';
 import { PROXY } from 'utils/apiConfig';
 import { setCookie } from 'utils/cookie';
 
@@ -115,77 +112,113 @@ const AuthForm = ({ type }: AuthType) => {
   };
 
   return (
-    <div className={`${styles.authFormBlock}`}>
-      <div className={`${styles.label}`}>
-        {type === 'register' ? '회원정보를 입력해주세요' : '로그인'}
+    <div className="w-full max-w-md mx-auto bg-white p-8 rounded-sm shadow-sm">
+      <div className="mb-8 text-center">
+        <h1 className="font-inter font-semibold text-2xl text-neutral-900 mb-2">
+          {type === 'register' ? '회원가입' : '로그인'}
+        </h1>
+        <p className="font-poppins font-regular text-base text-neutral-600">
+          {type === 'register' ? '회원정보를 입력해주세요' : 'Enter your details below'}
+        </p>
       </div>
-      <form onSubmit={handleSubmit}>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
         {type === 'login' && (
           <>
-            <Input
-              className={`${styles.styledInput}`}
-              name="id"
-              placeholder="아이디"
-              onChange={handleLoginInput}
-            />
-            <Input
-              className={`${styles.styledInput}`}
-              name="password"
-              placeholder="비밀번호"
-              type="password"
-              onChange={handleLoginInput}
-            />
+            <div>
+              <input
+                name="id"
+                placeholder="아이디"
+                value={loginForm.id}
+                onChange={handleLoginInput}
+                className="w-full border-0 border-b border-neutral-300 pb-2 font-poppins font-regular text-base text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none transition-colors duration-200"
+                required
+              />
+            </div>
+            <div>
+              <input
+                name="password"
+                placeholder="비밀번호"
+                type="password"
+                value={loginForm.password}
+                onChange={handleLoginInput}
+                className="w-full border-0 border-b border-neutral-300 pb-2 font-poppins font-regular text-base text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none transition-colors duration-200"
+                required
+              />
+            </div>
           </>
         )}
         {type === 'register' && (
           <>
-            <Input
-              className={`${styles.styledInput}`}
-              name="userId"
-              placeholder="아이디"
-              onChange={handleRegisterInput}
-              required
-            />
-            <Input
-              className={`${styles.styledInput}`}
-              name="userPassword"
-              placeholder="비밀번호"
-              type="password"
-              onChange={handleRegisterInput}
-              required
-            />
-            <Input
-              className={`${styles.styledInput}`}
-              name="userEmail"
-              placeholder="이메일"
-              onChange={handleRegisterInput}
-              type="email"
-              required
-            />
-            <Input
-              className={`${styles.styledInput}`}
-              name="userName"
-              placeholder="이름"
-              required
-              onChange={handleRegisterInput}
-            />
+            <div>
+              <input
+                name="userId"
+                placeholder="아이디"
+                value={registerForm.userId}
+                onChange={handleRegisterInput}
+                className="w-full border-0 border-b border-neutral-300 pb-2 font-poppins font-regular text-base text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none transition-colors duration-200"
+                required
+              />
+            </div>
+            <div>
+              <input
+                name="userPassword"
+                placeholder="비밀번호"
+                type="password"
+                value={registerForm.userPassword}
+                onChange={handleRegisterInput}
+                className="w-full border-0 border-b border-neutral-300 pb-2 font-poppins font-regular text-base text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none transition-colors duration-200"
+                required
+              />
+            </div>
+            <div>
+              <input
+                name="userEmail"
+                placeholder="이메일"
+                type="email"
+                value={registerForm.userEmail}
+                onChange={handleRegisterInput}
+                className="w-full border-0 border-b border-neutral-300 pb-2 font-poppins font-regular text-base text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none transition-colors duration-200"
+                required
+              />
+            </div>
+            <div>
+              <input
+                name="userName"
+                placeholder="이름"
+                value={registerForm.userName}
+                onChange={handleRegisterInput}
+                className="w-full border-0 border-b border-neutral-300 pb-2 font-poppins font-regular text-base text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none transition-colors duration-200"
+                required
+              />
+            </div>
           </>
         )}
-        <div className={`${styles.errorMsg}`}>{errorMsg}</div>
-        <div className={`${styles.authButton}`}>
+        
+        {errorMsg && (
+          <div className="text-red-500 font-poppins font-regular text-sm text-center">
+            {errorMsg}
+          </div>
+        )}
+        
+        <div className="pt-4">
           {type === 'register' ? (
-            <Button type="submit" name="signUp">
+            <button
+              type="submit"
+              name="signUp"
+              className="w-full bg-red-500 hover:bg-red-600 text-white font-poppins font-medium text-base py-3 rounded-sm transition-colors duration-200"
+            >
               회원가입
-            </Button>
+            </button>
           ) : (
-            <Button
+            <button
+              type="submit"
               name="login"
-              disabled={
-                loginForm.id.length === 0 || loginForm.password.length === 0
-              }
+              disabled={loginForm.id.length === 0 || loginForm.password.length === 0}
+              className="w-full bg-red-500 hover:bg-red-600 disabled:bg-red-300 disabled:cursor-not-allowed text-white font-poppins font-medium text-base py-3 rounded-sm transition-colors duration-200"
             >
               로그인
-            </Button>
+            </button>
           )}
         </div>
       </form>

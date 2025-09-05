@@ -76,6 +76,7 @@ src/
 - **색상**: Neutral, blue (primary), success, warning, error, red, purple, green, yellow, magenta 팔레트
 - **폰트**: Poppins (주요), Inter (보조) 커스텀 폰트 크기 및 가중치 포함
 - **컴포넌트 네이밍**: 컴포넌트는 대문자로 시작해야 하고 파일명과 일치해야 함
+- **이미지**: import 방식으로 직접 이미지 가져옴
 
 ### 스타일링 접근법
 - **주요**: 커스텀 디자인 토큰이 포함된 Tailwind CSS 클래스

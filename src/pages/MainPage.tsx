@@ -1,6 +1,9 @@
 import Header from 'components/layout/Header';
+import Footer from 'components/layout/Footer';
 import styles from './MainPage.module.css';
 import ProductSection from 'components/home/ProductSection';
+import CategorySection from 'components/home/CategorySection';
+import FlashSalesSection from 'components/home/FlashSalesSection';
 import { useEffect, useState } from 'react';
 import { productApi } from 'api';
 import { ProductListProps } from 'types/ResultDataType';
@@ -12,9 +15,27 @@ import 'swiper/css/navigation';
 import TopHeader from 'components/common/TopHeader';
 
 const banners = [
-  { src: require('../assets/banner.jpg'), alt: '오늘단하루 할인' },
-  { src: require('../assets/banner1.jpg'), alt: '비타민 브렌드데이' },
-  { src: require('../assets/banner3.jpg'), alt: '양반밥' },
+  { 
+    src: require('../assets/banner.jpg'), 
+    alt: 'One Day Special Discount',
+    title: 'FLASH SALE',
+    subtitle: 'Up to 70% Off Today Only',
+    buttonText: 'Shop Now'
+  },
+  { 
+    src: require('../assets/banner1.jpg'), 
+    alt: 'Vitamin Brand Day',
+    title: 'HEALTH & WELLNESS',
+    subtitle: 'Premium Supplements Collection',
+    buttonText: 'Discover More'
+  },
+  { 
+    src: require('../assets/banner3.jpg'), 
+    alt: 'Premium Rice Products',
+    title: 'ORGANIC FOODS',
+    subtitle: 'Fresh & Natural Products',
+    buttonText: 'Order Now'
+  },
 ];
 
 const MainPage = () => {
@@ -29,7 +50,7 @@ const MainPage = () => {
       const data = await productApi(param);
       setProductList(data);
     } catch (error) {
-      console.error('데이터 로드가 실패했습니다:', error);
+      console.error('Failed to load data:', error);
     }
   };
 
@@ -51,27 +72,48 @@ const MainPage = () => {
             disableOnInteraction: false,
           }}
           modules={[Navigation, Pagination, Autoplay]}
-          className="mySwiper"
+          className="mySwiper h-80 lg:h-96"
         >
           {banners.map((banner, index) => (
-            <SwiperSlide key={index}>
-              <img src={banner.src} alt={banner.alt} />
+            <SwiperSlide key={index} className="relative">
+              <div className="relative w-full h-full">
+                <img 
+                  src={banner.src} 
+                  alt={banner.alt} 
+                  className="w-full h-full object-cover"
+                />
+                {/* English Text Overlay */}
+                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                  <div className="text-center text-white px-4">
+                    <h2 className="font-inter font-bold text-3xl lg:text-5xl mb-4">
+                      {banner.title}
+                    </h2>
+                    <p className="font-poppins font-medium text-lg lg:text-2xl mb-6">
+                      {banner.subtitle}
+                    </p>
+                    <button className="bg-red-500 hover:bg-red-600 text-white font-poppins font-medium text-base px-8 py-3 rounded-sm transition-colors duration-200">
+                      {banner.buttonText}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
+      
+      {/* Category Section */}
+      <CategorySection />
+      
+      {/* Flash Sales Section */}
+      <FlashSalesSection />
+      
       <div className={`${styles['main-container']}`}>
-        <div>
-          <h2 className={`${styles.label}`}>
-            HOT! TREND
-            <br />
-            카테고리별
-            <span className={`${styles['text-blue']}`}> 추천 광고상품</span>
-          </h2>
-        </div>
-        <ProductSection label="여성패션" productList={productList} />
-        <ProductSection label="남성패션" productList={productList} />
+        <ProductSection label="Women's Fashion" productList={productList} />
+        <ProductSection label="Men's Fashion" productList={productList} />
       </div>
+      
+      <Footer />
     </>
   );
 };
